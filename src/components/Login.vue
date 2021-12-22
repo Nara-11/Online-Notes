@@ -5,20 +5,24 @@
         <div class="modal-container">
           <div class="main"></div>
           <div class="form">
-            <h3>注册</h3>
-            <div class="register" v-show="isShowRegister">
-              <input type="text" v-model="register.username" placeholder="请输入用户名">
-              <input type="password" v-model="register.password" placeholder="请输入密码">
-              <p v-bind:class="{error:register.isError}">{{register.notice}}</p>
-              <div class="button">注册</div>
-            </div>
-            <h3>登录</h3>
-            <div class="login" v-show="isShowLogin">
-              <input type="text" v-model="login.username" placeholder="请输入用户名">
-              <input type="password" v-model="login.password" placeholder="请输入密码">
-              <p v-bind:class="{error:login.isError}">{{login.notice}}</p>
-              <div class="button">登录</div>
-            </div>
+            <h3 @click="showRegister" v-bind:class="{selected: isShowRegister}">注册</h3>
+            <transition name="slide">
+              <div class="register" v-bind:class="{show: isShowRegister}">
+                <input type="text" v-model="register.username" @keyup.enter="onRegister" placeholder="请输入用户名">
+                <input type="password" v-model="register.password" placeholder="请输入密码">
+                <p v-bind:class="{error:register.isError}">{{ register.notice }}</p>
+                <div class="button" @click="onRegister">注册</div>
+              </div>
+            </transition>
+            <h3 @click="showLogin" v-bind:class="{selected: isShowLogin}">登录</h3>
+            <transition name="slide">
+              <div class="login" v-bind:class="{show: isShowLogin}">
+                <input type="text" v-model="login.username" placeholder="请输入用户名">
+                <input type="password" v-model="login.password" @keyup.enter="onLogin" placeholder="请输入密码">
+                <p v-bind:class="{error:login.isError}">{{ login.notice }}</p>
+                <div class="button" @click="onLogin">登录</div>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -33,19 +37,59 @@ export default {
     return {
       isShowRegister: true,
       isShowLogin: false,
-      register:{
-        username:'',
-        password:'',
-        notice:'请输入正确的用户名和密码',
-        isError:false
+      register: {
+        username: '',
+        password: '',
+        notice: '请输入正确的用户名和密码',
+        isError: false
       },
-      login:{
-        username:'',
-        password:'',
-        notice:'请记住用户名和密码',
-        isError:false
+      login: {
+        username: '',
+        password: '',
+        notice: '请记住用户名和密码',
+        isError: false
       }
     }
+  },
+  methods: {
+    showRegister() {
+      this.isShowRegister = true;
+      this.isShowLogin = false;
+    },
+    showLogin() {
+      this.isShowLogin = true;
+      this.isShowRegister = false;
+    },
+    onRegister() {
+      if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)) {
+        this.register.isError = true;
+        this.register.notice = '用户名3~15个字符，仅限于字母数字下划线中文';
+        return;
+      }
+      if (!/^.{6,16}$/.test(this.register.password)) {
+        this.register.isError = true;
+        this.register.notice = '密码长度为6~16个字符';
+        return;
+      }
+      this.register.isError = false;
+      this.register.notice = '';
+      console.log(`start register..., username: ${this.register.username} , password: ${this.register.password}`);
+    },
+    onLogin() {
+      if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
+        this.login.isError = true;
+        this.login.notice = '用户名3~15个字符，仅限于字母数字下划线中文';
+        return;
+      }
+      if (!/^.{6,16}$/.test(this.login.password)) {
+        this.login.isError = true;
+        this.login.notice = '密码长度为6~16个字符';
+        return;
+      }
+      this.login.isError = false
+      this.login.notice = '';
+      console.log(`start login..., username: ${this.login.username} , password: ${this.login.password}`)
+    },
   }
 }
 </script>
@@ -99,6 +143,10 @@ export default {
       &:nth-of-type(2) {
         border-bottom: 1px solid #eee;
       }
+
+      &.selected {
+        border-bottom: 1px solid #2bb964;
+      }
     }
 
     .button {
@@ -114,8 +162,15 @@ export default {
     }
 
     .login, .register {
-      padding: 10px 20px;
+      padding: 0 20px;
       border-top: 1px solid #eee;
+      height: 0;
+      overflow: hidden;
+      transition: height .4s;
+
+      &.show {
+        height: 193px;
+      }
 
       input {
         display: block;
