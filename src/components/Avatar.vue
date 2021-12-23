@@ -1,15 +1,30 @@
 <template>
-  <span :title="user.username">{{ slug }}</span>
+  <span :title="username">{{ slug }}</span>
 </template>
 
 <script>
+import Auth from '../apis/auth.js';
+import Bus from '../helpers/bus.js'
+
 export default {
   data() {
     return {
-      user: {
-        username: 'Nara'
-      },
-      slug: 'N'
+      username: 'User',
+    }
+  },
+  created(){
+    Bus.$on('userInfo',user=>{
+      this.username=user.username;
+    })
+    Auth.getInfo().then(res=>{
+      if(res.isLogin){
+        this.username=res.data.username;
+      }
+    })
+  },
+  computed:{
+    slug(){
+      return this.username[0].toUpperCase();
     }
   }
 }

@@ -13,12 +13,21 @@
 </template>
 
 <script>
+import Auth from '../apis/auth.js';
+
 export default {
   name: 'Login',
   data() {
     return {
       msg: '笔记本列表'
     }
+  },
+  created() {
+    Auth.getInfo().then(res => {
+      if (!res.isLogin) {
+        this.$router.push({path: '/login'})
+      }
+    })
   }
 }
 </script>

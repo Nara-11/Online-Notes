@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import avatar from "./Avatar";
+import avatar from "./Avatar.vue";
 import Auth from "../apis/auth.js";
 
 export default {

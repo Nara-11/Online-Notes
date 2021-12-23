@@ -31,11 +31,8 @@
 </template>
 
 <script>
-import Auth from '../apis/auth.js'
-
-// Auth.getInfo().then(data => {
-//   console.log(data);
-// })
+import Auth from '../apis/auth.js';
+import Bus from '../helpers/bus.js'
 
 export default {
   data() {
@@ -79,6 +76,7 @@ export default {
       Auth.register({username: this.register.username, password: this.register.password}).then(() => {
         this.register.isError = false;
         this.register.notice = '';
+        Bus.$emit('userInfo',{username:this.register.username});
         this.$router.push({path: 'notebooks'});
       }).catch(data => {
         this.register.isError = true;
@@ -99,6 +97,7 @@ export default {
       Auth.login({username: this.login.username, password: this.login.password}).then(()=> {
         this.login.isError = false;
         this.login.notice = '';
+        Bus.$emit('userInfo',{username:this.login.username});
         this.$router.push({path: 'notebooks'});
       }).catch(data => {
         this.login.isError = true;
