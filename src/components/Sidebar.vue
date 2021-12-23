@@ -7,16 +7,24 @@
       <router-link to="/trash/1" title="废纸篓"><i class="iconfont icon-trash"></i>废纸篓</router-link>
     </div>
     <div class="logout">
-      <i class="iconfont icon-logout"></i>
+      <i class="iconfont icon-logout" @click="logout"></i>
     </div>
   </div>
 </template>
 
 <script>
 import avatar from "./Avatar";
+import Auth from "../apis/auth.js";
 
 export default {
-  components: {avatar}
+  components: {avatar},
+  methods: {
+    logout() {
+      Auth.logout().then(data => {
+        console.log(data);
+      })
+    }
+  }
 }
 </script>
 
