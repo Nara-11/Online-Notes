@@ -8,7 +8,7 @@
 import Auth from "../apis/auth.js";
 
 export default {
-  name: 'Login',
+  name: 'TrashDetail',
   data() {
     return {
       msg: '回收站笔记详情页'

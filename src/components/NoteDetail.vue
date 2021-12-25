@@ -8,7 +8,7 @@
 import Auth from "../apis/auth.js";
 
 export default {
-  name: 'Login',
+  name: 'NoteDetail',
   data() {
     return {
       msg: '笔记详情页'

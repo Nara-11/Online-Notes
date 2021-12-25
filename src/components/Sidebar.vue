@@ -17,6 +17,7 @@ import avatar from "./Avatar.vue";
 import Auth from "../apis/auth.js";
 
 export default {
+  name:'Sidebar',
   components: {avatar},
   methods: {
     logout() {

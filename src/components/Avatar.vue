@@ -7,23 +7,24 @@ import Auth from '../apis/auth.js';
 import Bus from '../helpers/bus.js'
 
 export default {
+  name: 'Avatar',
   data() {
     return {
       username: 'User',
     }
   },
-  created(){
-    Bus.$on('userInfo',user=>{
-      this.username=user.username;
+  created() {
+    Bus.$on('userInfo', user => {
+      this.username = user.username;
     })
-    Auth.getInfo().then(res=>{
-      if(res.isLogin){
-        this.username=res.data.username;
+    Auth.getInfo().then(res => {
+      if (res.isLogin) {
+        this.username = res.data.username;
       }
     })
   },
-  computed:{
-    slug(){
+  computed: {
+    slug() {
       return this.username[0].toUpperCase();
     }
   }
