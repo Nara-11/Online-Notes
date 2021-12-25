@@ -4,7 +4,7 @@
 
 <script>
 import Auth from '../apis/auth.js';
-import Bus from '../helpers/bus.js'
+import Bus from '../helpers/bus.js';
 
 export default {
   name: 'Avatar',

@@ -14,7 +14,7 @@
                 <span>{{ notebook.noteCounts }}</span>
                 <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
                 <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
-<!--                <span class="date">{{ notebook.countDownData }}</span>-->
+                <!--                <span class="date">{{ notebook.countDownData }}</span>-->
                 <span class="date">{{ notebook.createdAt.split('T')[0] }}</span>
               </div>
             </router-link>
@@ -44,47 +44,66 @@ export default {
       this.notebooks = res.data;
     })
     Notebooks.getAll().then(res => {
-      console.log(res);
       this.notebooks = res.data;
     })
   },
   methods: {
     onCreate() {
-      let title = window.prompt('请输入笔记本名：');
-      if (title.trim() === '') {
-        window.alert('笔记本名不能为空');
-        return;
-      }
-      Notebooks.addNotebook({title}).then(res => {
-        // res.data.countDownData=countDown(res.data.createdAt);
-        this.notebooks.unshift(res.data);
-        // Notebooks.refresh().then(res => {
-        //   this.notebooks = res.data;
-        // });
-        window.alert(res.msg);
-      })
+      this.$prompt('请输入笔记本名：', '创建笔记本', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{1,30}$/,
+        inputErrorMessage: '笔记本名不能为空，且不超过30个字符'
+      }).then(({value}) => {
+        return Notebooks.addNotebook({title: value}).then(res => {
+          // res.data.countDownData=countDown(res.data.createdAt);
+          this.notebooks.unshift(res.data);
+          // Notebooks.refresh().then(res => {
+          //   this.notebooks = res.data;
+          // });
+          this.$message.success(res.msg);
+        });
+      }).catch(() => {
+        this.$message.info('取消输入');
+      });
     },
     onEdit(notebook) {
-      let title = window.prompt('请输入修改的笔记本名：', notebook.title);
-      Notebooks.updateNotebook(notebook.id, {title}).then(res => {
-        notebook.title = title;
-        // Notebooks.refresh().then(res => {
-        //   this.notebooks = res.data;
-        // });
-        window.alert(res.msg);
-      })
+      let title = '';
+      this.$prompt('请输入修改的笔记本名：', '编辑笔记本', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{1,30}$/,
+        inputValue: notebook.title,
+        inputErrorMessage: '笔记本名不能为空，且不超过30个字符'
+      }).then(({value}) => {
+        title = value;
+        return Notebooks.updateNotebook(notebook.id, {title}).then(res => {
+          notebook.title = title;
+          // Notebooks.refresh().then(res => {
+          //   this.notebooks = res.data;
+          // });
+          this.$message.success(res.msg);
+        });
+      }).catch(() => {
+        this.$message.info('取消输入');
+      });
     },
     onDelete(notebook) {
-      let isConfirm = window.confirm(`是否删除${notebook.title}`);
-      if (isConfirm) {
+      this.$confirm('是否删除该笔记本?', '删除笔记本', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
         Notebooks.deleteNotebook(notebook.id).then(res => {
           this.notebooks.splice(this.notebooks.indexOf(notebook), 1);
           // Notebooks.refresh().then(res => {
           //   this.notebooks = res.data;
           // });
-          window.alert(res.msg);
-        })
-      }
+          this.$message.success(res.msg);
+        });
+      }).catch(() => {
+        this.$message.info('已取消删除');
+      });
     }
   }
 }

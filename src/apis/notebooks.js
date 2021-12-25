@@ -1,5 +1,5 @@
-import request from '../helpers/request.js'
-import {countDown} from '../helpers/util.js'
+import request from '../helpers/request.js';
+import {countDown} from '../helpers/util.js';
 
 const URL = {
   GET: '/notebooks',
