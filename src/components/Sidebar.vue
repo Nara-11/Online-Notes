@@ -2,9 +2,9 @@
   <div id="sidebar">
     <avatar></avatar>
     <div class="icons">
-      <router-link to="/note/1" title="所有笔记"><i class="iconfont icon-note"></i>所有笔记</router-link>
+      <router-link to="/note" title="所有笔记"><i class="iconfont icon-note"></i>所有笔记</router-link>
       <router-link to="/notebooks" title="笔记本"><i class="iconfont icon-notebook"></i>笔记本</router-link>
-      <router-link to="/trash/1" title="废纸篓"><i class="iconfont icon-trash"></i>废纸篓</router-link>
+      <router-link to="/trash" title="废纸篓"><i class="iconfont icon-trash"></i>废纸篓</router-link>
     </div>
     <div class="logout">
       <i class="iconfont icon-logout" @click="logout"></i>

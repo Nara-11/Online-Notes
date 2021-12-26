@@ -8,7 +8,7 @@
         <h3>笔记本列表({{ notebooks.length }})</h3>
         <ul class="notebook-list">
           <li v-for="notebook in notebooks">
-            <router-link to="/note/1" class="notebook">
+            <router-link :to="`/note?notebookId=${notebook.id}`" class="notebook">
               <div>
                 {{ notebook.title }}
                 <span>{{ notebook.noteCounts }}</span>
