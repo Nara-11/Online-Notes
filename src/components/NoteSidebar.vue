@@ -1,13 +1,15 @@
 <template>
   <div class="note-sidebar">
-    <span class="btn add-note">添加笔记</span>
+    <button class="add-note">添加笔记</button>
     <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
-        笔记本 <i class="iconfont icon-down"></i>
+        {{ curBook.title }} <i class="iconfont icon-down"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="notebook in notebooks" key="notebook.id" :command="notebook.id">{{ notebook.title }}</el-dropdown-item>
-        <el-dropdown-item command="trash">回收站</el-dropdown-item>
+        <el-dropdown-item v-for="notebook in notebooks" :key="notebook.id" :command="notebook.id">
+          {{ notebook.title }}
+        </el-dropdown-item>
+        <el-dropdown-item command="trash">废纸篓</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <div class="menu">
@@ -16,8 +18,8 @@
     </div>
     <ul class="notes">
       <li v-for="note in notes">
-        <router-link :to="`/note?noteId=${note.id}`">
-          <span class="date">{{ note.updatedAtFriendly }}</span>
+        <router-link :to="`/note?noteId=${note.id}&notebookId=${curBook.id}`">
+          <span class="date">{{ note.countDownData }}</span>
           <span class="title">{{ note.title }}</span>
         </router-link>
       </li>
@@ -26,36 +28,37 @@
 </template>
 
 <script>
+import Notebooks from '../apis/notebooks.js';
+import Notes from '../apis/notes.js';
+
+window.Notes = Notes;
+
 export default {
   data() {
     return {
-      notebooks: [
-        {
-          id: 1,
-          title: 'hello1'
-        },
-        {
-          id: 2,
-          title: 'hello2'
-        }
-      ],
-      notes: [
-        {
-          id: 11,
-          title: 'hello1biji',
-          updatedAtFriendly: 'gg'
-        },
-        {
-          id: 12,
-          title: 'hello2biji',
-          updatedAtFriendly: 'gg'
-        }
-      ]
+      notebooks: [],
+      notes: [],
+      curBook: {}
     }
   },
+  created() {
+    Notebooks.getAll().then(res => {
+      this.notebooks = res.data;
+      this.curBook = this.notebooks.find(notebook => notebook.id === this.$route.query.notebookId) || this.notebooks[0] || {};
+      return Notes.getAll({notebookId: this.curBook.id})
+    }).then(res => {
+      this.notes = res.data;
+    })
+  },
   methods: {
-    handleCommand(cmd) {
-      console.log(cmd);
+    handleCommand(notebookId) {
+      if (notebookId === 'trash') {
+        return this.$router.push({path: '/trash'});
+      }
+      this.curBook = this.notebooks.find(notebook => notebook.id === notebookId);
+      Notes.getAll({notebookId}).then(res => {
+        this.notes = res.data;
+      })
     }
   }
 }
@@ -67,17 +70,19 @@ export default {
   position: relative;
   width: 290px;
   border-right: 1px solid #ccc;
-  background-color: #eee;
+  background: #eee;
 
   .add-note {
+    border: none;
+    outline: none;
     position: absolute;
+    background: #fff;
     right: 5px;
     top: 12px;
     color: #666;
     font-size: 12px;
     padding: 2px 4px;
     box-shadow: 0 0 2px 0 #ccc;
-    border: none;
     z-index: 1;
   }
 
@@ -89,7 +94,7 @@ export default {
     line-height: 45px;
     text-align: center;
     border-bottom: 1px solid #ccc;
-    background-color: #f7f7f7;
+    background: #f7f7f7;
     display: block;
   }
 
@@ -123,7 +128,6 @@ export default {
 
   .notes {
     li {
-
       &:nth-child(odd) {
         background-color: #f2f2f2;
       }

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login.vue'
-import NotebookList from '@/components/NotebookList.vue'
-import NoteDetail from '@/components/NoteDetail.vue'
-import TrashDetail from '@/components/TrashDetail.vue'
+import Login from '../components/Login.vue'
+import NotebookList from '../components/NotebookList.vue'
+import NoteDetail from '../components/NoteDetail.vue'
+import TrashDetail from '../components/TrashDetail.vue'
 
 Vue.use(Router)
 
