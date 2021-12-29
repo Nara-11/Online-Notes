@@ -14,8 +14,8 @@
                 <span>{{ notebook.noteCounts }}</span>
                 <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
                 <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
-                <!--                <span class="date">{{ notebook.countDownData }}</span>-->
-                <span class="date">{{ notebook.createdAt.split('T')[0] }}</span>
+                <!--                                <span class="date">{{ notebook.countDownData }}</span>-->
+                <span class="date">{{ notebook.createDate }}</span>
               </div>
             </router-link>
           </li>
@@ -57,10 +57,10 @@ export default {
       }).then(({value}) => {
         return Notebooks.addNotebook({title: value}).then(res => {
           // res.data.countDownData=countDown(res.data.createdAt);
-          this.notebooks.unshift(res.data);
-          // Notebooks.refresh().then(res => {
-          //   this.notebooks = res.data;
-          // });
+          // this.notebooks.unshift(res.data);
+          Notebooks.getAll().then(res => {
+            this.notebooks = res.data;
+          });
           this.$message.success(res.msg);
         });
       }).catch(() => {
