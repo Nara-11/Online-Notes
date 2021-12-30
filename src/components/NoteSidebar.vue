@@ -13,7 +13,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <div class="menu">
-      <div>更新时间</div>
+      <div>修改时间</div>
       <div>标题</div>
     </div>
     <ul class="notes">

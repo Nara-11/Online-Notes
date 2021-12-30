@@ -27,27 +27,31 @@
 
 <script>
 import Auth from '../apis/auth.js';
-import Notebooks from '../apis/notebooks.js';
+import {mapState, mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'NotebookList',
   data() {
-    return {
-      notebooks: []
-    }
+    return {}
   },
   created() {
     Auth.getInfo().then(res => {
       if (!res.isLogin) {
-        this.$router.push({path: '/login'})
+        this.$router.push({path: '/login'});
       }
-      this.notebooks = res.data;
     })
-    Notebooks.getAll().then(res => {
-      this.notebooks = res.data;
-    })
+    this.$store.dispatch('getNotebooks');
+  },
+  computed: {
+    ...mapGetters(['notebooks'])
   },
   methods: {
+    ...mapActions([
+      'getNotebooks',
+      'addNotebook',
+      'updateNotebook',
+      'deleteNotebook'
+    ]),
     onCreate() {
       this.$prompt('请输入笔记本名：', '创建笔记本', {
         confirmButtonText: '确定',
@@ -55,20 +59,12 @@ export default {
         inputPattern: /^.{1,30}$/,
         inputErrorMessage: '笔记本名不能为空，且不超过30个字符'
       }).then(({value}) => {
-        return Notebooks.addNotebook({title: value}).then(res => {
-          // res.data.countDownData=countDown(res.data.createdAt);
-          // this.notebooks.unshift(res.data);
-          Notebooks.getAll().then(res => {
-            this.notebooks = res.data;
-          });
-          this.$message.success(res.msg);
-        });
+        this.addNotebook({title: value});
       }).catch(() => {
         this.$message.info('取消输入');
       });
     },
     onEdit(notebook) {
-      let title = '';
       this.$prompt('请输入修改的笔记本名：', '编辑笔记本', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -76,14 +72,7 @@ export default {
         inputValue: notebook.title,
         inputErrorMessage: '笔记本名不能为空，且不超过30个字符'
       }).then(({value}) => {
-        title = value;
-        return Notebooks.updateNotebook(notebook.id, {title}).then(res => {
-          notebook.title = title;
-          // Notebooks.refresh().then(res => {
-          //   this.notebooks = res.data;
-          // });
-          this.$message.success(res.msg);
-        });
+        this.updateNotebook({notebookId:notebook.id,title:value})
       }).catch(() => {
         this.$message.info('取消输入');
       });
@@ -94,13 +83,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        Notebooks.deleteNotebook(notebook.id).then(res => {
-          this.notebooks.splice(this.notebooks.indexOf(notebook), 1);
-          // Notebooks.refresh().then(res => {
-          //   this.notebooks = res.data;
-          // });
-          this.$message.success(res.msg);
-        });
+        this.deleteNotebook({notebookId:notebook.id})
       }).catch(() => {
         this.$message.info('已取消删除');
       });
@@ -178,6 +161,9 @@ export default {
   main .date {
     float: right;
     margin-left: 10px;
+  }
+  main .date{
+    padding: 1px 0;
   }
 
   //main .iconfont {

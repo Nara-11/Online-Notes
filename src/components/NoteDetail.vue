@@ -61,13 +61,9 @@ export default {
       this.curNote = val.find(note => note.id.toString() === this.$route.query.noteId) || {};
     })
   },
-  beforeRouteUpdate(to, from, next) {
-    this.curNote = this.notes.find(note => note.id.toString() === to.query.noteId) || {};
-    next();
-  },
   computed: {
     previewContent() {
-      return md.render(this.curNote.content||'');
+      return md.render(this.curNote.content || '');
     }
   },
   methods: {
@@ -88,6 +84,10 @@ export default {
         this.$router.replace({path: '/note'})
       })
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.curNote = this.notes.find(note => note.id.toString() === to.query.noteId) || {};
+    next();
   }
 }
 </script>
