@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
   data() {
@@ -36,8 +36,10 @@ export default {
   },
   created() {
     this.getNotebooks().then(() => {
-      this.$store.commit('setCurBook', {curBookId: this.$route.query.notebookId});
-      this.getNotes({notebookId: this.curBook.id});
+      this.setCurBook({curBookId: this.$route.query.notebookId});
+      return this.getNotes({notebookId: this.curBook.id});
+    }).then(() => {
+      this.setCurNote({curNoteId: this.$route.query.noteId});
     })
   },
   computed: {
@@ -48,6 +50,10 @@ export default {
     ])
   },
   methods: {
+    ...mapMutations([
+      'setCurNote',
+      'setCurBook'
+    ]),
     ...mapActions([
       'getNotebooks',
       'getNotes',
