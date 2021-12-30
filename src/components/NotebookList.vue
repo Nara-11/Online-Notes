@@ -27,7 +27,7 @@
 
 <script>
 import Auth from '../apis/auth.js';
-import {mapState, mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   name: 'NotebookList',
@@ -72,7 +72,7 @@ export default {
         inputValue: notebook.title,
         inputErrorMessage: '笔记本名不能为空，且不超过30个字符'
       }).then(({value}) => {
-        this.updateNotebook({notebookId:notebook.id,title:value})
+        this.updateNotebook({notebookId: notebook.id, title: value})
       }).catch(() => {
         this.$message.info('取消输入');
       });
@@ -83,7 +83,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.deleteNotebook({notebookId:notebook.id})
+        this.deleteNotebook({notebookId: notebook.id})
       }).catch(() => {
         this.$message.info('已取消删除');
       });
@@ -162,7 +162,8 @@ export default {
     float: right;
     margin-left: 10px;
   }
-  main .date{
+
+  main .date {
     padding: 1px 0;
   }
 

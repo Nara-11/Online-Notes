@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import notebook from './modules/notebook'
-import note from './modules/note'
-import trash from './modules/trash'
-import user from './modules/user'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import notebook from './modules/notebook.js';
+import note from './modules/note.js';
+import trash from './modules/trash.js';
+import user from './modules/user.js';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
