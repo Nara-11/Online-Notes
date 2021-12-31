@@ -9,7 +9,7 @@
         <el-dropdown-item v-for="notebook in notebooks" :key="notebook.id" :command="notebook.id">
           {{ notebook.title }}
         </el-dropdown-item>
-        <el-dropdown-item command="trash">废纸篓</el-dropdown-item>
+        <el-dropdown-item command="trash">回收站</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <div class="menu">

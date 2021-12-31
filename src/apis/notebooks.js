@@ -1,5 +1,5 @@
 import request from '../helpers/request.js';
-import {countDown} from "../helpers/util";
+import {countDown} from "../helpers/util.js";
 
 const URL = {
   GET: '/notebooks',
@@ -15,7 +15,7 @@ export default {
         res.data = res.data.sort((notebook1, notebook2) => notebook1.createdAt < notebook2.createdAt ? 1 : -1);
         res.data.forEach(notebook => {
           notebook.createDate = notebook.createdAt.split('T')[0];
-          notebook.countDownData=countDown(res.data.updatedAt);
+          notebook.countDownData=countDown(notebook.updatedAt);
         })
         resolve(res);
       }).catch(err => {
