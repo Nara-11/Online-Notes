@@ -4,7 +4,7 @@ import router from '../../router';
 const state = {
   user: null
 }
-const getter = {
+const getters = {
   username: state => state.user === null ? 'User' : state.user.username,
   slug: state => state.user === null ? 'U' : state.user.username.charAt(0)
 }
@@ -24,11 +24,12 @@ const actions = {
       commit('setUser', {user: res.data});
     })
   },
-  checkLogin({commit},payload) {
-    return Auth.getInfo().then(res=>{
-      if(!res.isLogin){
+  checkLogin({commit, state}, payload) {
+    if (state.user !== null) return Promise.resolve();
+    return Auth.getInfo().then(res => {
+      if (!res.isLogin) {
         router.push(payload);
-      }else{
+      } else {
         commit('setUser', {user: res.data})
       }
     })
@@ -37,7 +38,7 @@ const actions = {
 
 export default {
   state,
-  getter,
+  getters,
   mutations,
   actions
 }

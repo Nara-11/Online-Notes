@@ -36,67 +36,55 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
 import MarkdownIt from 'markdown-it';
-import Trash from '../apis/trash.js'
+import {mapGetters, mapMutations, mapActions} from "vuex";
 
 let md = new MarkdownIt();
-window.Trash=Trash;
 
 export default {
   name: 'TrashDetail',
   data() {
-    return {
-      curTrashNote: {
-        id: 3,
-        title: 'biji',
-        content: '##hello',
-        createDate: '2021',
-        countDownData: 'gg'
-      },
-      belongTo: 'wode',
-      trashNotes: [
-        {
-          id: 3,
-          title: 'biji',
-          content: '##hello',
-          createDate: '2021',
-          countDownData: 'gg'
-        },
-        {
-          id: 5,
-          title: 'biji2',
-          content: '##hello2',
-          createDate: '20212',
-          countDownData: 'gg2'
-        },
-        {
-          id: 4,
-          title: 'biji3',
-          content: '##hello3',
-          createDate: '20213',
-          countDownData: 'gg3'
-        },
-      ]
-    }
+    return {}
   },
   created() {
     this.checkLogin({path: '/login'});
+    this.getNotebooks()
+    this.getTrashNotes().then(() => {
+      this.setCurTrashNote({curTrashNoteId: this.$route.query.noteId})
+    })
   },
   computed: {
+    ...mapGetters([
+      'trashNotes',
+      'curTrashNote',
+      'belongTo'
+    ]),
     compiledMarkdown() {
       return md.render(this.curTrashNote.content || '');
     }
   },
   methods: {
+    ...mapMutations([
+      'setCurTrashNote'
+    ]),
     ...mapActions([
-      'checkLogin'
+      'checkLogin',
+      'deleteTrashNote',
+      'revertTrashNote',
+      'getTrashNotes',
+      'getNotebooks'
+
     ]),
     onDelete() {
+      this.deleteTrashNote({noteId: this.curTrashNote.id});
     },
     onRevert() {
-
+      this.revertTrashNote({noteId: this.curTrashNote.id});
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.setCurTrashNote({curTrashNoteId: to.query.noteId});
+    next();
   }
 }
 </script>
@@ -114,7 +102,6 @@ export default {
       margin-left: 10px;
       padding: 2px 4px;
       font-size: 12px;
-
     }
   }
 }

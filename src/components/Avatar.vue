@@ -22,10 +22,7 @@ export default {
     ...mapGetters([
       'username',
       'slug'
-    ]),
-    slug() {
-      return this.username[0].toUpperCase();
-    }
+    ])
   }
 }
 </script>
