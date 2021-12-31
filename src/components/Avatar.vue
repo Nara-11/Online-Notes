@@ -3,27 +3,26 @@
 </template>
 
 <script>
-import Auth from '../apis/auth.js';
-import Bus from '../helpers/bus.js';
+import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: 'Avatar',
   data() {
-    return {
-      username: 'User',
-    }
+    return {}
   },
   created() {
-    Bus.$on('userInfo', user => {
-      this.username = user.username;
-    })
-    Auth.getInfo().then(res => {
-      if (res.isLogin) {
-        this.username = res.data.username;
-      }
+   this.setUser();
+  },
+  methods: {
+    ...mapActions({
+      setUser:'checkLogin'
     })
   },
   computed: {
+    ...mapGetters([
+      'username',
+      'slug'
+    ]),
     slug() {
       return this.username[0].toUpperCase();
     }
