@@ -50,7 +50,11 @@ export default {
     this.checkLogin({path: '/login'});
     this.getNotebooks()
     this.getTrashNotes().then(() => {
-      this.setCurTrashNote({curTrashNoteId: this.$route.query.noteId})
+      this.setCurTrashNote({curTrashNoteId: this.$route.query.noteId});
+      this.$router.replace({
+        path: '/trash',
+        query: {noteId: this.curTrashNote.id}
+      })
     })
   },
   computed: {
@@ -76,10 +80,30 @@ export default {
 
     ]),
     onDelete() {
-      this.deleteTrashNote({noteId: this.curTrashNote.id});
+      this.$confirm('是否彻底删除该笔记?', '删除笔记', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return this.deleteTrashNote({noteId: this.curTrashNote.id})
+      }).then(() => {
+        this.setCurTrashNote();
+        this.$router.replace({
+          path: '/trash',
+          query: {noteId: this.curTrashNote.id}
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除');
+      });
     },
     onRevert() {
-      this.revertTrashNote({noteId: this.curTrashNote.id});
+      this.revertTrashNote({noteId: this.curTrashNote.id}).then(() => {
+        this.setCurTrashNote();
+        this.$router.replace({
+          path: '/trash',
+          query: {noteId: this.curTrashNote.id}
+        })
+      })
     }
   },
   beforeRouteUpdate(to, from, next) {

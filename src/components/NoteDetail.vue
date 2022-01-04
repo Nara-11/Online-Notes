@@ -3,7 +3,7 @@
     <note-sidebar @update:notes="val=>notes=val"></note-sidebar>
     <div class="note-detail">
       <div class="note-empty" v-show="!curNote.id">
-        请选择笔记
+        请新建笔记
       </div>
       <div class="note-full" v-show="curNote.id">
         <div class="note-bar">
@@ -142,6 +142,7 @@ export default {
   }
 
   .note-title {
+    border-bottom: 1px solid #eee;
     input, span {
       display: inline-block;
       width: 100%;

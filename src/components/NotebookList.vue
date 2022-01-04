@@ -11,7 +11,7 @@
             <router-link :to="`/note?notebookId=${notebook.id}`" class="notebook">
               <div>
                 {{ notebook.title }}
-                <span>{{ notebook.noteCounts }}</span>
+                <span>{{ notebook.noteCounts||0 }}</span>
                 <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
                 <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
                 <!--                                <span class="date">{{ notebook.countDownData }}</span>-->
