@@ -18,12 +18,10 @@
     <div class="note-detail">
       <div class="note-bar" v-if="true">
         <span>创建日期：{{ curTrashNote.createDate }}</span>
-        <span>|</span>
         <span>更新时间：{{ curTrashNote.countDownData }}</span>
-        <span>|</span>
         <span>所属笔记本：{{ belongTo }}</span>
-        <a class="btn action" @click="onDelete">彻底删除</a>
-        <a class="btn action" @click="onRevert">恢复</a>
+        <span class="iconfont icon-rive" @click="onDelete"></span>
+        <span class="iconfont icon-revert" @click="onRevert"></span>
       </div>
       <div class="note-title">
         <span>{{ curTrashNote.title }}</span>
@@ -104,12 +102,12 @@ export default {
           query: {noteId: this.curTrashNote.id}
         })
       })
-    }
+    },
   },
   beforeRouteUpdate(to, from, next) {
     this.setCurTrashNote({curTrashNoteId: to.query.noteId});
     next();
-  }
+  },
 }
 </script>
 
@@ -119,15 +117,6 @@ export default {
   align-items: stretch;
   background-color: #fff;
   flex: 1;
-
-  .note-bar {
-    .action {
-      float: right;
-      margin-left: 10px;
-      padding: 2px 4px;
-      font-size: 12px;
-    }
-  }
 }
 
 .trash-sidebar {
@@ -135,18 +124,6 @@ export default {
   width: 290px;
   border-right: 1px solid #ccc;
   background-color: #eee;
-
-  .add-note {
-    position: absolute;
-    right: 5px;
-    top: 12px;
-    color: #666;
-    font-size: 12px;
-    padding: 2px 4px;
-    box-shadow: 0 0 2px 0 #ccc;
-    border: none;
-    z-index: 1;
-  }
 
   .trash-title {
     font-size: 18px;

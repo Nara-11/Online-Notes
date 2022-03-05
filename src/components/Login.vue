@@ -8,8 +8,8 @@
             <h3 @click="showRegister" v-bind:class="{selected: isShowRegister}">注册</h3>
             <transition name="slide">
               <div class="register" v-bind:class="{show: isShowRegister}">
-                <input type="text" v-model="register.username" @keyup.enter="onRegister" placeholder="请输入用户名">
-                <input type="password" v-model="register.password" placeholder="请输入密码">
+                <input type="text" v-model="register.username" placeholder="请输入用户名">
+                <input type="password" v-model="register.password" @keyup.enter="onRegister" placeholder="请输入密码">
                 <p v-bind:class="{error:register.isError}">{{ register.notice }}</p>
                 <div class="button" @click="onRegister">注册</div>
               </div>
@@ -37,18 +37,18 @@ export default {
   name: 'Login',
   data() {
     return {
-      isShowRegister: true,
-      isShowLogin: false,
+      isShowRegister: false,
+      isShowLogin: true,
       register: {
         username: '',
         password: '',
-        notice: '请输入正确的用户名和密码',
+        notice: '请记住用户名和密码',
         isError: false
       },
       login: {
         username: '',
         password: '',
-        notice: '请记住用户名和密码',
+        notice: '请输入正确的用户名和密码',
         isError: false
       }
     }
@@ -130,7 +130,7 @@ export default {
 
 .modal-container {
   width: 800px;
-  height: 500px;
+  height: 350px;
   margin: 0 auto;
   background-color: #fff;
   border-radius: 2px;
@@ -141,7 +141,7 @@ export default {
 
   .main {
     flex: 1;
-    background: #36bc64 url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center no-repeat;
+    background: #B55650 url(../assets/bgk.jpg) center center no-repeat;
     background-size: contain;
   }
 
@@ -161,12 +161,12 @@ export default {
       }
 
       &.selected {
-        border-bottom: 1px solid #2bb964;
+        border-bottom: 2px solid #B55650;
       }
     }
 
     .button {
-      background-color: #2bb964;
+      background-color: #A53C38;
       height: 36px;
       line-height: 36px;
       text-align: center;
@@ -185,24 +185,24 @@ export default {
       transition: height .4s;
 
       &.show {
-        height: 193px;
+        height: 250px;
       }
 
       input {
         display: block;
         width: 100%;
-        height: 35px;
-        line-height: 35px;
+        height: 40px;
+        line-height: 40px;
         padding: 0 6px;
         border-radius: 4px;
         border: 1px solid #ccc;
         outline: none;
         font-size: 14px;
-        margin-top: 10px;
+        margin-top: 20px;
       }
 
       input:focus {
-        border: 3px solid #9dcaf8;
+        border: 2px solid #B55650;
       }
 
       p {

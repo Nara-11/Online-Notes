@@ -15,7 +15,7 @@ export function countDown(dataStr) {
     case space < 1000 * 3600 * 24:
       str = Math.floor(space / (1000 * 3600)) + '小时前';
       break;
-    case space < 1000 * 3600 * 24 * 30:
+    default:
       str = Math.floor(space / (1000 * 3600 * 24)) + '天前';
       break;
   }

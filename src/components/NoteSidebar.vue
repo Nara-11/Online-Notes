@@ -1,6 +1,6 @@
 <template>
   <div class="note-sidebar">
-    <button class="add-note" @click="onAddNote">新建笔记</button>
+    <button class="add-note" @click="onAddNote"><i class="iconfont icon-plus"></i>新建笔记</button>
     <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
         {{ curBook.title }} <i class="iconfont icon-down"></i>
@@ -37,7 +37,7 @@ export default {
   created() {
     this.getNotebooks().then(() => {
       this.setCurBook({curBookId: this.$route.query.notebookId});
-      return this.getNotes({notebookId: this.curBook.id});
+      if(this.curBook.id) return this.getNotes({notebookId: this.curBook.id});
     }).then(() => {
       this.setCurNote({curNoteId: this.$route.query.noteId});
       this.$router.replace({
@@ -66,8 +66,6 @@ export default {
       'getNotebooks',
       'getNotes',
       'addNote',
-      'updateNotebook',
-      'deleteNotebook'
     ]),
     handleCommand(notebookId) {
       if (notebookId === 'trash') {
@@ -112,6 +110,10 @@ export default {
     padding: 2px 4px;
     box-shadow: 0 0 2px 0 #ccc;
     z-index: 1;
+
+   >.iconfont {
+      font-size: 12px;
+    }
   }
 
   .notebook-title {

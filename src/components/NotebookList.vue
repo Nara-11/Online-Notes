@@ -5,17 +5,16 @@
     </header>
     <main>
       <div class="layout">
-        <h3>笔记本列表({{ notebooks.length }})</h3>
+        <h3>笔记本列表（{{ notebooks.length }}）</h3>
         <ul class="notebook-list">
           <li v-for="notebook in notebooks">
             <router-link :to="`/note?notebookId=${notebook.id}`" class="notebook">
               <div>
-                {{ notebook.title }}
-                <span>{{ notebook.noteCounts||0 }}</span>
+                <span class="iconfont icon-notebook"></span>{{ notebook.title }}
+                <span>（{{ notebook.noteCounts||0 }}）</span>
                 <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
                 <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
-                <!--                                <span class="date">{{ notebook.countDownData }}</span>-->
-                <span class="date">{{ notebook.createDate }}</span>
+                <span class="date">创建时间：{{ notebook.createDate }}</span>
               </div>
             </router-link>
           </li>
@@ -56,9 +55,7 @@ export default {
         inputErrorMessage: '笔记本名不能为空，且不超过30个字符'
       }).then(({value}) => {
         this.addNotebook({title: value});
-      }).catch(() => {
-        this.$message.info('取消输入');
-      });
+      })
     },
     onEdit(notebook) {
       this.$prompt('请输入修改的笔记本名：', '编辑笔记本', {
@@ -69,9 +66,7 @@ export default {
         inputErrorMessage: '笔记本名不能为空，且不超过30个字符'
       }).then(({value}) => {
         this.updateNotebook({notebookId: notebook.id, title: value})
-      }).catch(() => {
-        this.$message.info('取消输入');
-      });
+      })
     },
     onDelete(notebook) {
       this.$confirm('是否删除该笔记本?', '删除笔记本', {
@@ -80,9 +75,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.deleteNotebook({notebookId: notebook.id})
-      }).catch(() => {
-        this.$message.info('已取消删除');
-      });
+      })
     }
   }
 }
@@ -96,12 +89,12 @@ export default {
     border: none;
     outline: none;
     font-size: 12px;
+    background: #fff;
     color: #666;
     cursor: pointer;
     padding: 2px 4px;
     margin-left: 10px;
-    background: white;
-    box-shadow: 0 0 2px 0;
+    box-shadow: 0 0 2px 0 #ccc;
   }
 
   button .iconfont {

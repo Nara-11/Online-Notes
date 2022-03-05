@@ -22,7 +22,7 @@ export default {
   methods: {
     ...mapActions(['logout']),
     onLogout() {
-      this.logout();
+      this.logout({path:'/login'});
     }
   }
 }
@@ -33,11 +33,12 @@ export default {
   position: relative;
   width: 100px;
   text-align: center;
-  background: #2c333c;
+  background: #A53C38;
 }
 
 .icons {
-  margin-top: 15px;
+  margin: 20px 10px;
+  text-align: left;
 
   a {
     padding: 6px 0;
@@ -46,7 +47,7 @@ export default {
   }
 
   .router-link-active {
-    background-color: #5e6266;
+    background-color: #B55650;
   }
 }
 

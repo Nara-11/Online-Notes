@@ -8,13 +8,13 @@ const state = {
 const getters = {
   notes: state => state.notes || [],
   curNote: state => {
-    if (!Array.isArray(state.notes)) return {};
-    if (!state.curNoteId) return state.notes[0] || {};
-    return state.notes.find(note => note.id == state.curNoteId) || {};
-  }
+    if (!Array.isArray(state.notes)) return {title: '', content: '' };
+    if (!state.curNoteId) return state.notes[0] || {title: '', content: '' };
+    return state.notes.find(note => note.id == state.curNoteId) || {title: '', content: '' };
+  },
 }
 const mutations = {
-  setNotes(state, payload) {
+  setNote(state, payload) {
     state.notes = payload.notes;
   },
   addNote(state, payload) {
@@ -35,7 +35,7 @@ const mutations = {
 const actions = {
   getNotes({commit}, {notebookId}) {
     return Note.getAll({notebookId}).then(res => {
-      commit('setNotes', {notes: res.data});
+      commit('setNote', {notes: res.data});
     })
   },
   addNote({commit}, {notebookId, title, content}) {

@@ -30,17 +30,17 @@ export default {
 <style scoped lang="less">
 span {
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   text-align: center;
-  line-height: 32px;
+  line-height: 37px;
   border-radius: 50%;
-  background: #f2b81c;
-  color: #fff;
+  background: #fff;
+  color: #B55650;
   text-shadow: 1px 0 1px #795c19;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 24px;
   margin-top: 15px;
 }
 </style>

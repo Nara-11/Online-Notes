@@ -10,8 +10,8 @@
           <span>创建日期：{{ curNote.createDate }}</span>
           <span>修改时间：{{ curNote.countDownData }}</span>
           <span>{{ statusText }}</span>
-          <span class="iconfont icon-delete" @click="onDeleteNote"></span>
-          <span class="iconfont icon-fullscreen" @click="isShowPreview=!isShowPreview"></span>
+          <span class="iconfont icon-trash" @click="onDeleteNote"></span>
+          <span class="iconfont icon-markdown" @click="isShowPreview=!isShowPreview"></span>
         </div>
         <div class="note-title">
           <input type="text" v-model:value="curNote.title" @input="onUpdateNote" @keydown="statusText='输入中'"
@@ -53,7 +53,7 @@ export default {
   computed: {
     ...mapGetters([
       'notes',
-      'curNote'
+      'curNote',
     ]),
     previewContent() {
       return md.render(this.curNote.content || '');
@@ -69,6 +69,7 @@ export default {
       'checkLogin'
     ]),
     onUpdateNote: _.debounce(function () {
+      if(!this.curNote.id) return
       this.updateNote({
         noteId: this.curNote.id,
         title: this.curNote.title,
@@ -138,7 +139,6 @@ export default {
       font-size: 18px;
       cursor: pointer;
     }
-
   }
 
   .note-title {

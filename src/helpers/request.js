@@ -6,7 +6,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.baseURL = baseURLConfig.baseURL;
 axios.defaults.withCredentials = true;
 
-export default function request(url, type = 'Get', data = {}) {
+export default function request(url, type = 'GET', data = {}) {
   return new Promise((resolve, reject) => {
     let option = {
       url,
