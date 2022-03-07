@@ -1,21 +1,19 @@
-# vue-evernote-client
+# Online-Notes
 
-> A Vue.js project
+## 项目介绍
 
-## Build Setup
+Tiddler-UI是一个轻量级的UI库，你可以在这个仓库查看或下载源代码.
 
-``` bash
-# install dependencies
-npm install
+[查看项目](https://nara-11.github.io/online-notes-website/)
 
-# serve with hot reload at localhost:8080
-npm run dev
+## 运行步骤
 
-# build for production with minification
-npm run build
+1. 运行 npm run dev
+2. 打开 https://localhost:8080/
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+## 主要功能
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+* 用户：用户的注册、登录和注销
+* 笔记本：新建和删除笔记本，修改笔记本标题
+* 笔记：新建和删除笔记，基于markdown 语法编辑笔记，可实时保存
+* 回收站：恢复和彻底删除笔记
