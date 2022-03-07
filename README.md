@@ -2,7 +2,7 @@
 
 ## 项目介绍
 
-Tiddler-UI是一个轻量级的UI库，你可以在这个仓库查看或下载源代码.
+Online-Notes是一个简单好用的线上笔记
 
 [查看项目](https://nara-11.github.io/online-notes-website/)
 
