@@ -4,8 +4,6 @@
 
 Online-Notes是一个简单好用的线上笔记
 
-[查看项目](https://nara-11.github.io/online-notes-website/)
-
 ## 运行步骤
 
 1. 运行 npm run dev
